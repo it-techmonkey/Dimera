@@ -1,0 +1,277 @@
+/* Round 3: a single architectural threshold, followed directly by the treatment menu. */
+:root { --linen: #F1ECE4; --on-ink-muted: #D4C4B0; }
+.button-ink,
+.header-reserve,
+.mobile-bar button,
+.mobile-bar a,
+.floating-reserve { font-weight: 400; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 79;
+  pointer-events: none;
+  background: url("/door-design/limewash-wall.webp") repeat;
+  background-size: 560px auto;
+  opacity: .055;
+  mix-blend-mode: multiply;
+}
+
+.site-header {
+  background: transparent;
+  border-color: transparent;
+  transition: transform .42s var(--ease), background .35s, border-color .35s;
+}
+.site-header.is-scrolled {
+  background: var(--paper);
+  border-bottom-color: var(--line);
+}
+.header-hidden .site-header { transform: translateY(-105%); }
+.floating-reserve {
+  display: none;
+  position: fixed;
+  z-index: 71;
+  right: clamp(20px, 4vw, 66px);
+  top: 16px;
+  min-height: 44px;
+  padding: 0 17px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 12px var(--font-ui);
+  letter-spacing: var(--track-button);
+  text-transform: uppercase;
+}
+.floating-reserve span { margin-left: 22px; font-size: 18px; font-weight: 300; }
+@media (min-width: 768px) {
+  .has-left-hero.header-hidden .floating-reserve { display: block; }
+}
+
+.portal-section { height: 305svh; }
+.portal-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 0;
+  padding: 64px 0 0;
+  overflow: hidden;
+  background: var(--paper);
+  isolation: isolate;
+  --door-copy-opacity: 1;
+  --arch-opacity: 1;
+  --wall-opacity: 1;
+  --image-opacity: 1;
+}
+.portal-wall,
+.portal-window-shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--wall-opacity);
+}
+.portal-wall {
+  z-index: 0;
+  background: var(--paper-deep) url("/door-design/limewash-wall.webp") center/cover;
+}
+.portal-window-shadow {
+  z-index: 1;
+  background: url("/door-design/window-shadow.png") center/cover no-repeat;
+  opacity: calc(var(--wall-opacity) * .11);
+  mix-blend-mode: multiply;
+}
+.portal-interior {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  opacity: var(--image-opacity);
+  background: var(--plaster);
+  clip-path: inset(10% 30% 5% 30% round 300px 300px 0 0 / 370px 370px 0 0);
+  pointer-events: none;
+}
+.portal-interior .welcome-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 56%;
+}
+.interior-frame { display: none; }
+.portal-arch {
+  --arch-w: min(43vw, 590px);
+  z-index: 3;
+  width: var(--arch-w);
+  height: min(82svh, 760px);
+  min-height: 0;
+  margin: 0 auto;
+  border: 1px solid rgba(102, 82, 60, .26);
+  border-radius: 50% 50% 0 0;
+  background: transparent;
+  box-shadow: inset 0 9px 24px rgba(66, 49, 35, .22),
+              0 0 0 7px rgba(247, 244, 238, .22),
+              0 12px 25px rgba(72, 51, 33, .10);
+  opacity: var(--arch-opacity);
+}
+.door-leaf,
+.js-ready .door-leaf {
+  display: block;
+  background: var(--linen) url("/door-design/door-linen.webp") center/cover;
+  box-shadow: inset 0 0 18px rgba(100, 78, 56, .10);
+}
+.door-left { border-right-color: rgba(102, 82, 60, .25); }
+.door-right { border-left-color: rgba(102, 82, 60, .25); }
+.door-inset { inset: 22px; border-color: rgba(132, 104, 76, .20); }
+.door-pull {
+  top: 55%;
+  width: 5px;
+  height: 79px;
+  border-radius: 4px;
+  background: var(--champagne);
+  box-shadow: 1px 0 2px rgba(41, 35, 30, .16);
+}
+.door-pull::before,
+.door-pull::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  width: 11px;
+  height: 2px;
+  background: var(--champagne);
+  border-radius: 3px;
+}
+.door-pull::before { top: 2px; }
+.door-pull::after { bottom: 2px; }
+.door-left .door-pull { right: 24px; }
+.door-right .door-pull { left: 24px; }
+.portal-top { top: 18%; opacity: var(--door-copy-opacity); }
+.door-invitation,
+.js-ready .door-invitation {
+  display: flex;
+  top: 32%;
+  opacity: var(--door-copy-opacity);
+}
+.door-invitation p { color: var(--ink); }
+.door-invitation button {
+  min-height: 44px;
+  margin-top: clamp(260px, 34svh, 320px);
+  padding: 12px 5px;
+  border-bottom-color: var(--champagne);
+}
+.door-invitation button span { margin-left: 17px; }
+.portal-progress,
+.portal-side-note,
+.arrival-copy,
+.ritual-films { display: none !important; }
+
+/* Service discovery is the first content after the doorway. */
+.treatment-section { background: var(--paper); }
+.treatment-heading { padding-top: 52px; }
+.treatment-image,
+.portal-interior .welcome-photo,
+.experience img,
+.gallery-tile img,
+.visit-grid > img,
+.booking-photo img,
+.image-dialog img,
+.directory-photo { filter: saturate(.89) sepia(.035) contrast(.98); }
+.manifesto h2 em { color: var(--ink); font-style: normal; }
+.gallery .eyebrow,
+.gallery .gallery-tile > span span { color: var(--ink); }
+.ink-reveal { opacity: 1; }
+.js-ready .ink-reveal {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(18px);
+  transition: opacity .85s var(--ease), filter .85s var(--ease), transform .85s var(--ease);
+}
+.js-ready .ink-reveal.is-visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+.site-footer { background: var(--paper); }
+
+/* The original ambient cursor changes label only where it gives a useful cue. */
+.cursor-ambient {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 280px;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  will-change: transform;
+  transition: opacity .24s;
+}
+.cursor-ambient.is-active { opacity: 1; }
+.cursor-ambient[data-mode="halo"] { background: radial-gradient(circle, rgba(180,147,100,.08), rgba(180,147,100,0) 68%); }
+.cursor-ambient span { display: none; }
+.cursor-ambient[data-mode="enter"],
+.cursor-ambient[data-mode="view"] { background: none; mix-blend-mode: normal; }
+.cursor-ambient[data-mode="enter"] span,
+.cursor-ambient[data-mode="view"] span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--ink);
+  background: rgba(247,244,238,.72);
+  font: 400 12px var(--font-ui);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.cursor-ambient[data-mode="enter"] span::after { content: "Enter"; }
+.cursor-ambient[data-mode="view"] span::after { content: "View"; }
+.dialog-open .cursor-ambient { opacity: 0; }
+
+@media (min-width: 768px) and (max-width: 1050px) {
+  .portal-arch { --arch-w: min(65vw, 520px); }
+}
+@media (max-width: 767px) {
+  .site-header { height: 60px; }
+  .header-reserve { min-height: 44px; }
+  .portal-section { height: 300svh; }
+  .portal-stage { height: 100svh; min-height: 0; padding: 60px 0 0; overflow: hidden; }
+  .portal-arch {
+    --arch-w: min(calc(100vw - 46px), 430px);
+    width: var(--arch-w);
+    height: min(83svh, 735px);
+    min-height: 0;
+    margin: 0 auto;
+  }
+  .portal-wall,
+  .portal-window-shadow { left: 8px; right: 8px; }
+  .portal-top { top: 17%; }
+  .door-invitation,
+  .js-ready .door-invitation { top: 29%; }
+  .door-invitation button { margin-top: min(42svh, 300px); }
+  .treatment-section { padding-top: 70px; }
+  .treatment-heading { padding-top: 42px; }
+  .treatment-image { width: min(72vw, 350px); height: 260px; margin: 0 auto; }
+  .cursor-ambient { display: none; }
+  .mobile-bar { display: none; }
+  body.has-left-hero:not(.dialog-open) .mobile-bar { display: grid; }
+}
+@media (hover: none), (pointer: coarse) { .cursor-ambient { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .portal-section { height: auto; }
+  .portal-stage { position: relative; min-height: 100svh; }
+  .portal-interior {
+    inset: 0;
+    opacity: 1;
+  }
+  .portal-interior::after { content: ""; position: absolute; inset: 0; background: rgba(247,244,238,.38); }
+  .portal-arch { opacity: 1; }
+  .door-leaf,
+  .js-ready .door-leaf { display: none !important; }
+  .portal-top { opacity: 1; }
+  .door-invitation,
+  .js-ready .door-invitation { display: flex !important; opacity: 1; }
+  .js-ready .ink-reveal { opacity: 1; filter: none; transform: none; }
+  .cursor-ambient { display: none; }
+}

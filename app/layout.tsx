@@ -1,11 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
+import "./styles/arch-doorway.css";
+import "./styles/arch-doorway-round3.css";
+import "./styles/arch-doorway-round4.css";
+import "./styles/integration.css";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -13,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
+  weight: ["300", "400", "500"],
   display: "swap",
 });
 

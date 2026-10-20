@@ -1,0 +1,119 @@
+:root {
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-ui: var(--font-montserrat), system-ui, sans-serif;
+}
+
+/* Round 4 doorway uses the repository's images inside the fixed arch. */
+.interior-image-layer { position: absolute; inset: 0; overflow: hidden; }
+.portal-interior .interior-image { object-fit: cover; object-position: center; }
+.portal-section .door-invitation { pointer-events: auto; }
+.portal-section .door-invitation[inert] { pointer-events: none; }
+
+/* Header and mobile navigation. */
+.header-actions { justify-self: end; display: flex; align-items: center; gap: 10px; }
+.header-menu-toggle { display: none; width: 44px; height: 44px; border: 0; background: none; color: var(--ink); font-size: 24px; }
+.mobile-navigation { display: none; }
+
+/* The 24-item collection retains the preview's image and treatment typography. */
+.treatment-section { background: var(--paper-deep); }
+.collection-desktop-image img { object-fit: cover; }
+.collection-group { border-top: 1px solid var(--line-strong); }
+.collection-group:last-of-type { border-bottom: 1px solid var(--line-strong); }
+.treatment-menu .collection-group { margin: 0; }
+.treatment-menu .collection-group h3 { margin: 0; }
+.collection-category {
+  display: flex; align-items: baseline; width: 100%; min-height: 76px; gap: 15px;
+  padding: 12px 0; border: 0; background: transparent; color: var(--ink); text-align: left;
+}
+.collection-category:hover .collection-name,
+.collection-category:focus-visible .collection-name { color: var(--bronze); }
+.collection-number { flex: none; font: 400 12px/1.4 var(--font-ui); letter-spacing: .16em; color: var(--bronze); }
+.collection-name { flex: 1; font: 400 clamp(31px,3vw,45px)/1.1 var(--font-display); transition: color .2s; }
+.collection-count { flex: none; font: 400 12px/1.4 var(--font-ui); letter-spacing: .04em; color: var(--soft-ink); }
+.collection-symbol { flex: none; min-width: 20px; font: 300 27px/1 var(--font-display); text-align: right; }
+.collection-panel { padding: 0 0 26px 27px; }
+.collection-panel[hidden] { display: none !important; }
+.collection-panel ul { list-style: none; margin: 0; padding: 0; }
+.collection-panel li + li { border-top: 1px solid var(--line); }
+.treatment-menu .collection-service {
+  position: relative; min-height: 58px; padding: 9px 0; gap: 12px;
+}
+.treatment-menu .collection-service .service-name { white-space: normal; font-size: clamp(23px,2.2vw,30px); }
+.collection-service .service-meta { justify-content: flex-end; font-size: 13px; text-align: right; }
+.collection-service .service-meta s { color: var(--soft-ink); font-size: 12px; }
+.collection-service .service-rule { min-width: 12px; }
+.collection-arrow { flex: none; font-size: 19px; line-height: 1; color: var(--bronze); }
+.collection-service:hover .service-name,
+.collection-service:focus-visible .service-name { color: var(--bronze); }
+.collection-mobile-image { display: none; }
+.collection-note { margin: 22px 0 0; font-size: 13px; color: var(--soft-ink); }
+
+/* The live site's Ritual content replaces the preview manifesto. */
+.ritual-section { background: var(--paper); }
+.ritual-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); align-items: center; gap: clamp(40px,7vw,120px); padding-top: 75px; }
+.ritual-image { position: relative; min-height: 630px; overflow: hidden; border-radius: 48% 48% 0 0; background: var(--paper-deep); }
+.ritual-image img { object-fit: cover; filter: saturate(.89) sepia(.035) contrast(.98); }
+.ritual-copy h2 { margin: 18px 0 30px; font: 300 clamp(41px,4.4vw,68px)/1.08 var(--font-display); letter-spacing: -.01em; }
+.ritual-copy > p:not(.eyebrow) { max-width: 630px; margin: 0 0 19px; font: 300 16px/1.7 var(--font-ui); color: var(--soft-ink); }
+.ritual-copy .button-ink { margin-top: 25px; }
+
+/* Footer holds every provisional contact field in one place. */
+.site-footer { scroll-margin-top: 70px; }
+.footer-contact { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 30px; padding: 0 0 70px; }
+.footer-contact > div { border-top: 1px solid var(--line-strong); padding-top: 18px; }
+.footer-contact span { display: block; margin-bottom: 17px; font: 400 12px/1.4 var(--font-ui); letter-spacing: var(--track-button); text-transform: uppercase; color: var(--bronze); }
+.footer-contact address,.footer-contact p,.footer-contact a { display: block; margin: 0; font: 400 15px/1.7 var(--font-ui); color: var(--ink); text-decoration: none; }
+.footer-contact a { width: fit-content; min-height: 28px; border-bottom: 1px solid transparent; }
+.footer-contact a:hover { border-color: var(--bronze); }
+.footer-top { border-top: 1px solid var(--line-strong); padding-top: 48px; }
+
+/* Current booking logic, styled as a request panel. */
+.booking-drawer { background: var(--paper) !important; color: var(--ink); box-shadow: 0 20px 70px rgba(41,35,30,.17) !important; }
+.booking-drawer { width: min(940px, 94vw) !important; padding-left: min(35%, 330px); }
+.booking-drawer-photo { position: absolute; left: 22px; top: 22px; bottom: 22px; width: calc(min(35%, 330px) - 44px); overflow: hidden; border-radius: 48% 48% 0 0; background: var(--paper-deep); }
+.booking-drawer-photo img { object-fit: cover; filter: saturate(.89) sepia(.035) contrast(.98); }
+.booking-drawer-photo span { position: absolute; left: 16px; bottom: 17px; padding: 7px 9px; background: var(--paper); color: var(--ink); font: 400 12px var(--font-ui); letter-spacing: var(--track-button); }
+.booking-drawer h2,.booking-drawer h3 { font-family: var(--font-display); font-weight: 300; }
+.booking-drawer button { min-height: 44px; }
+
+@media (max-width: 767px) {
+  .site-header { grid-template-columns: 1fr auto; }
+  .header-menu-toggle { display: grid; place-items: center; }
+  .mobile-navigation { display: flex; position: absolute; top: 60px; left: 0; right: 0; flex-direction: column; padding: 8px 20px 20px; border-bottom: 1px solid var(--line); background: var(--paper); }
+  .mobile-navigation a { display: flex; align-items: center; justify-content: space-between; min-height: 50px; border-bottom: 1px solid var(--line); font: 400 12px var(--font-ui); letter-spacing: var(--track-button); text-transform: uppercase; }
+  .mobile-navigation span { font-size: 18px; }
+  .collection-desktop-image { display: none; }
+  .treatment-layout { display: block; }
+  .treatment-heading h2 { font-size: clamp(48px,12vw,59px); }
+  .collection-category { min-height: 66px; gap: 10px; }
+  .collection-name { font-size: clamp(29px,7vw,36px); }
+  .collection-count { font-size: 12px; }
+  .collection-panel { padding: 0 0 20px; }
+  .collection-mobile-image { display: block; position: relative; height: 220px; margin: 0 0 15px; overflow: hidden; border-radius: 48% 48% 0 0; }
+  .collection-mobile-image img { object-fit: cover; }
+  .treatment-menu .collection-service { align-items: flex-start; min-height: 62px; gap: 4px; padding: 10px 25px 10px 0; flex-direction: column; }
+  .treatment-menu .collection-service .service-name { font-size: 25px; line-height: 1.1; }
+  .collection-service .service-rule { display: none; }
+  .collection-service .service-meta { justify-content: flex-start; text-align: left; white-space: normal; }
+  .collection-arrow { position: absolute; right: 0; top: 19px; }
+  .ritual-layout { display: flex; flex-direction: column; align-items: stretch; gap: 38px; padding-top: 55px; }
+  .ritual-image { min-height: 430px; }
+  .ritual-copy h2 { font-size: clamp(42px,11vw,58px); }
+  .footer-contact { grid-template-columns: 1fr; gap: 32px; padding-bottom: 52px; }
+  .booking-drawer { width: 100vw !important; padding-left: 0; }
+  .booking-drawer-photo { display: none; }
+  body .mobile-bar.mobile-bar-active { display: grid; }
+}
+
+@media (max-width: 390px) {
+  .collection-category { flex-wrap: wrap; }
+  .collection-count { margin-left: auto; }
+  .collection-symbol { margin-left: 0; }
+  .treatment-menu .collection-service .service-name { font-size: 23px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ambient { display: none; }
+  .portal-section .door-leaf { display: block !important; }
+  .portal-section .door-invitation { display: flex !important; }
+}

@@ -1,158 +1,92 @@
 "use client";
 
-import { useRef } from "react";
-import { getImageProps } from "next/image";
-import { motion, useScroll, useTransform } from "motion/react";
-import { ease } from "@/lib/data";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 
-// Art direction: a portrait photo on phones, a wide one from tablet up.
-const {
-  props: { srcSet: desktopSrcSet },
-} = getImageProps({
-  src: "/images/hero-manicure-table.jpg",
-  alt: "",
-  fill: true,
-  quality: 90,
-  sizes: "100vw",
-});
-const { props: mobileImg } = getImageProps({
-  src: "/images/hero-mobile-salon.jpg",
-  alt: "A calm beauty ritual in a sunlit, ivory-toned salon",
-  fill: true,
-  priority: true,
-  quality: 90,
-  sizes: "100vw",
-});
+const clamp = (value: number) => Math.max(0, Math.min(1, value));
+const ease = (value: number) => {
+  const x = clamp(value);
+  return x * x * (3 - 2 * x);
+};
 
-export default function Hero({ onReserve }: { onReserve: () => void }) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+export default function Hero({ onPassedChange }: { onPassedChange: (passed: boolean) => void }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const invitationRef = useRef<HTMLDivElement>(null);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    let lastPassed = false;
+    const update = () => {
+      frame = 0;
+      const section = sectionRef.current;
+      const stage = stageRef.current;
+      if (!section || !stage) return;
+      const rect = section.getBoundingClientRect();
+      const passed = rect.bottom <= window.innerHeight * 0.96;
+      if (passed !== lastPassed) { lastPassed = passed; onPassedChange(passed); }
+      if (reduced.matches) return;
+      const travel = Math.max(1, section.offsetHeight - window.innerHeight);
+      const progress = clamp(-rect.top / travel);
+      const open = ease(progress / 0.5);
+      if (leftRef.current) leftRef.current.style.transform = `rotateY(${-102 * open}deg)`;
+      if (rightRef.current) rightRef.current.style.transform = `rotateY(${102 * open}deg)`;
+      stage.style.setProperty("--door-copy-opacity", String(1 - ease(progress / 0.15)));
+      stage.style.setProperty("--light-opacity", String(open * 0.22));
+      stage.style.setProperty("--interior-parallax", `${(progress * 2.5).toFixed(2)}%`);
+      const second = ease((progress - 0.42) / 0.22);
+      const third = ease((progress - 0.72) / 0.22);
+      [1 - second, second * (1 - third), third].forEach((opacity, index) => {
+        if (imageRefs.current[index]) imageRefs.current[index]!.style.opacity = String(opacity);
+      });
+      if (invitationRef.current) invitationRef.current.inert = progress > 0.15;
+    };
+    const queue = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    reduced.addEventListener("change", queue);
+    return () => {
+      window.removeEventListener("scroll", queue);
+      window.removeEventListener("resize", queue);
+      reduced.removeEventListener("change", queue);
+      cancelAnimationFrame(frame);
+    };
+  }, [onPassedChange]);
+
+  const enter = () => {
+    const collection = document.getElementById("collection-title");
+    if (!collection) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    collection.scrollIntoView({ behavior: reduced ? "instant" : "smooth" });
+    window.setTimeout(() => collection.focus({ preventScroll: true }), reduced ? 0 : 700);
+  };
 
   return (
-    <section
-      id="top"
-      ref={ref}
-      className="grain relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden"
-    >
-      <motion.div style={{ y: bgY }} className="absolute inset-0">
-        <motion.div
-          initial={{ scale: 1.18 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 8, ease: "easeOut" }}
-          className="relative h-full w-full max-md:top-[16%] max-md:[mask-image:linear-gradient(to_bottom,transparent,black_24%)]"
-        >
-          <picture>
-            <source media="(min-width: 768px)" srcSet={desktopSrcSet} />
-            <img {...mobileImg} alt={mobileImg.alt} className="object-cover" />
-          </picture>
-        </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background" />
-      </motion.div>
-
-      <div
-        className="aurora left-[8%] top-[12%] h-72 w-72 bg-accent/20"
-        style={{ animationDelay: "0s" }}
-      />
-      <div
-        className="aurora bottom-[10%] right-[6%] h-96 w-96 bg-accent/15"
-        style={{ animationDelay: "-7s" }}
-      />
-
-      <motion.div
-        style={{ y: textY, opacity: fade }}
-        className="relative z-10 flex flex-col items-center px-6 text-center"
-      >
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.7, duration: 1, ease }}
-          className="mb-6 font-body text-[10px] uppercase tracking-[0.25em] text-foreground/70 sm:text-[11px] sm:tracking-ultra"
-        >
-          A Sanctuary for the Modern Woman
-        </motion.p>
-
-        <h1
-          aria-label="Dimera"
-          className="flex overflow-hidden font-heading text-[21vw] font-light leading-[0.9] tracking-[0.05em] text-foreground sm:text-[17vw] lg:text-[14rem]">
-          {"DIMERA".split("").map((letter, i) => (
-            <motion.span
-              key={i}
-              aria-hidden="true"
-              initial={{ y: "115%", rotate: 6 }}
-              animate={{ y: 0, rotate: 0 }}
-              transition={{ delay: 1.4 + i * 0.07, duration: 1.1, ease }}
-              className="inline-block"
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </h1>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 2.2, duration: 1.2, ease }}
-          className="mt-8 h-px w-20 origin-center bg-accent/70"
-        />
-
-        <motion.p
-          initial={{ opacity: 0, filter: "blur(6px)" }}
-          animate={{ opacity: 1, filter: "blur(0px)" }}
-          transition={{ delay: 2.4, duration: 1.2, ease }}
-          className="mt-8 max-w-xl font-heading text-xl font-light italic text-foreground/80 sm:text-2xl"
-        >
-          The ritual of transformation, refined.
-        </motion.p>
-
-        <motion.button
-          onClick={onReserve}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.7, duration: 1, ease }}
-          className="group relative mt-12 overflow-hidden border border-foreground/40 px-12 py-4 font-body text-[11px] uppercase tracking-luxe text-foreground transition-colors duration-500 hover:text-background"
-        >
-          <span className="relative z-10">Start Your Ritual</span>
-          <span className="absolute inset-0 translate-y-full bg-foreground transition-transform duration-500 ease-out group-hover:translate-y-0" />
-        </motion.button>
-
-        <motion.a
-          href="#menu"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3, duration: 1, ease }}
-          className="mt-5 inline-flex min-h-11 items-center gap-2 font-body text-[10px] uppercase tracking-luxe text-foreground/75 underline-offset-[6px] transition-colors hover:text-accent-strong hover:underline"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-          Launch offer — view prices
-        </motion.a>
-      </motion.div>
-
-      <motion.div
-        aria-hidden="true"
-        style={{ opacity: fade }}
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3"
-      >
-        <motion.span
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="font-body text-[9px] uppercase tracking-ultra text-foreground/50"
-        >
-          Scroll
-        </motion.span>
-        <div className="h-12 w-px overflow-hidden bg-foreground/15">
-          <motion.div
-            animate={{ y: [-48, 48] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="h-1/2 w-px bg-accent"
-          />
+    <section ref={sectionRef} id="top" className="portal-section js-ready" aria-label="Enter the Dimera atelier">
+      <div ref={stageRef} className="portal-stage">
+        <div className="portal-wall" aria-hidden="true" />
+        <div className="portal-window-shadow" aria-hidden="true" />
+        <div className="portal-niche" aria-hidden="true"><span className="niche-reveal" /><span className="niche-threshold" /></div>
+        <div className="portal-arch">
+          <div className="portal-interior" aria-hidden="true">
+            {["/images/pedicure.jpg", "/images/hero-mobile-salon.jpg", "/images/wash-blow.jpg"].map((src, index) => (
+              <div key={src} ref={(node) => { imageRefs.current[index] = node; }} className="interior-image-layer" style={{ opacity: index === 0 ? 1 : 0 }}>
+                <Image src={src} alt="" fill priority={index === 0} sizes="(max-width: 767px) 90vw, 590px" className="interior-image" />
+              </div>
+            ))}
+            <span className="interior-light" />
+          </div>
+          <div ref={leftRef} className="door-leaf door-left" aria-hidden="true"><span className="door-inset" /><span className="door-pull" /></div>
+          <div ref={rightRef} className="door-leaf door-right" aria-hidden="true"><span className="door-inset" /><span className="door-pull" /></div>
+          <div className="portal-top"><h1 className="wordmark">DIMERA</h1></div>
+          <div ref={invitationRef} className="door-invitation"><p>The ritual of transformation, refined.</p><button type="button" onClick={enter}>Enter the atelier <span aria-hidden="true">↗</span></button></div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -2,47 +2,46 @@
 
 import { useEffect, useRef } from "react";
 
-/** Soft warm halo that trails the pointer (hidden on touch devices via CSS). */
 export default function CursorGlow() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let x = targetX;
-    let y = targetY;
+    const eligible = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    if (!eligible.matches) return;
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+    let targetX = x;
+    let targetY = y;
     let frame = 0;
-
-    const onMove = (e: MouseEvent) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-    };
-
     const tick = () => {
+      frame = 0;
+      if (document.hidden) return;
       x += (targetX - x) * 0.18;
       y += (targetY - y) * 0.18;
-      if (ref.current) {
-        ref.current.style.transform = `translate3d(${x - 140}px, ${y - 140}px, 0)`;
-      }
+      if (ref.current) ref.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
       frame = requestAnimationFrame(tick);
     };
-
-    window.addEventListener("mousemove", onMove);
+    const move = (event: PointerEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      const cursor = ref.current;
+      if (!cursor) return;
+      cursor.classList.add("is-active");
+      cursor.dataset.mode = (event.target as Element).closest(".portal-arch") ? "enter" : "halo";
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+    const leave = (event: PointerEvent) => {
+      if (!event.relatedTarget) ref.current?.classList.remove("is-active");
+    };
+    document.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerout", leave);
     frame = requestAnimationFrame(tick);
     return () => {
-      window.removeEventListener("mousemove", onMove);
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerout", leave);
       cancelAnimationFrame(frame);
     };
   }, []);
 
-  return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className="cursor-glow pointer-events-none fixed top-0 left-0 z-[60] h-[280px] w-[280px] rounded-full"
-      style={{ transform: "translate3d(-300px, -300px, 0)" }}
-    />
-  );
+  return <div ref={ref} className="cursor-ambient" data-mode="halo" aria-hidden="true"><span /></div>;
 }

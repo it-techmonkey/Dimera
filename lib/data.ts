@@ -229,11 +229,9 @@ export const services: Service[] = [
 ];
 
 export const navLinks = [
-  { label: "Atelier", href: "#atelier" },
-  { label: "Prices", href: "#menu" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Ritual", href: "#about" },
-  { label: "Voices", href: "#voices" },
+  { label: "The Collection", href: "#collection" },
+  { label: "The Ritual", href: "#about" },
+  { label: "First Visit", href: "#experience" },
   { label: "Visit", href: "#visit" },
 ];
 

@@ -1,0 +1,143 @@
+/* Round 4: a material doorway with a fixed, portrait interior. */
+:root { --wall: #E3DACB; --linen: #F2ECE1; }
+.portal-section { height: 180svh; }
+.portal-stage {
+  --door-copy-opacity: 1;
+  --light-opacity: 0;
+  --interior-parallax: 0%;
+  background: var(--paper);
+}
+.portal-wall {
+  opacity: 1;
+  background: var(--wall) url("/door-design/limewash-wall.webp") center/cover;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+}
+.portal-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 2%;
+  height: 1px;
+  background: rgba(104, 85, 66, .28);
+  box-shadow: 0 2px 0 rgba(247, 244, 238, .58);
+  pointer-events: none;
+}
+.portal-window-shadow {
+  opacity: .16;
+  background-size: cover;
+  mix-blend-mode: multiply;
+}
+.portal-niche {
+  position: absolute;
+  z-index: 2;
+  top: calc(50% + 32px);
+  left: 50%;
+  width: calc(min(43vw, 590px) + 72px);
+  height: calc(min(82svh, 760px) + 42px);
+  transform: translate(-50%, -50%);
+  border-radius: 50% 50% 0 0;
+  background: #CFC3B1;
+  box-shadow: 0 0 0 1px rgba(92, 72, 51, .33), 0 14px 30px rgba(73, 54, 36, .2), inset 0 13px 20px rgba(72, 54, 38, .28);
+  pointer-events: none;
+}
+.portal-niche::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(184, 153, 105, .85);
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px rgba(247, 244, 238, .38);
+}
+.niche-reveal {
+  position: absolute;
+  inset: 21px 21px 0;
+  border-radius: 50% 50% 0 0;
+  background: #B7A895;
+  box-shadow: inset 0 16px 19px rgba(57, 43, 32, .36), inset 12px 0 14px rgba(57, 43, 32, .18), inset -12px 0 14px rgba(57, 43, 32, .18);
+}
+.niche-threshold {
+  position: absolute;
+  z-index: 4;
+  left: -13px;
+  right: -13px;
+  bottom: -10px;
+  height: 13px;
+  border-top: 2px solid rgba(111, 87, 58, .52);
+  background: linear-gradient(#E8DFD1, #CBBBAB);
+  box-shadow: 0 5px 9px rgba(74, 56, 39, .18);
+}
+.portal-arch {
+  opacity: 1;
+  border: 1px solid rgba(95, 75, 54, .45);
+  background: #D5C8B6;
+  box-shadow: inset 0 12px 16px rgba(45, 34, 25, .34), 0 0 0 1px rgba(240, 218, 184, .65);
+}
+.door-leaf,
+.js-ready .door-leaf { background-color: var(--linen); }
+.portal-interior {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: none;
+  opacity: 1;
+  background: #D4C9B9;
+  overflow: hidden;
+}
+.interior-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 105%;
+  top: -2.5%;
+  object-fit: cover;
+  object-position: center var(--interior-parallax);
+  filter: saturate(.87) sepia(.035) contrast(.97);
+  transform: translateY(var(--interior-parallax));
+}
+.interior-image:nth-child(1) { opacity: 1; object-position: center 50%; }
+.interior-image:nth-child(2), .interior-image:nth-child(3) { opacity: 0; object-position: center 50%; }
+.interior-light {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg, rgba(255, 244, 218, .29), transparent 50%);
+  opacity: var(--light-opacity);
+  pointer-events: none;
+}
+.portal-top, .door-invitation, .js-ready .door-invitation { opacity: var(--door-copy-opacity); transition: none; }
+.treatment-section { padding-top: 0; }
+.treatment-heading { padding-top: 52px; }
+.social-section + .site-footer { margin-top: 0; }
+
+@media (min-width: 768px) and (max-width: 1050px) {
+  .portal-niche { width: calc(min(65vw, 520px) + 72px); }
+}
+@media (max-width: 767px) {
+  .portal-section { height: 180svh; }
+  .portal-stage { padding-top: 60px; }
+  .portal-niche {
+    top: calc(50% + 30px);
+    width: calc(min(100vw - 46px, 430px) + 26px);
+    height: calc(min(83svh, 735px) + 18px);
+  }
+  .portal-niche::before { inset: 3px; }
+  .niche-reveal { inset: 10px 10px 0; }
+  .niche-threshold { left: -5px; right: -5px; }
+  .portal-stage::after { bottom: 2%; }
+  .portal-window-shadow { left: 8px; right: 8px; }
+  .treatment-section { padding-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal-section { height: auto; }
+  .portal-stage { position: relative; min-height: 100svh; height: 100svh; }
+  .portal-interior { inset: 0; opacity: 1; }
+  .portal-interior::after { display: none; }
+  .door-leaf, .js-ready .door-leaf { display: block !important; }
+  .portal-top { opacity: 1; }
+  .door-invitation, .js-ready .door-invitation { display: flex !important; opacity: 1; }
+}

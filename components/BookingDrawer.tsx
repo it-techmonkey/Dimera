@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
+import Image from "next/image";
 import { menuItems, priceMenu, stylists, timeSlots } from "@/lib/data";
 import { formatDate, isPastSlot, salonToday } from "@/lib/time";
 import { Check, ChevronLeft, ChevronRight, X } from "./icons";
@@ -34,7 +35,7 @@ const emptyForm: Form = {
   notes: "",
 };
 
-const steps = ["Service", "Date & Time", "Artisan", "Your Details"];
+const steps = ["Service", "Preferred Time", "Artisan", "Your Details"];
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const isValidPhone = (phone: string) =>
@@ -226,26 +227,27 @@ export default function BookingDrawer({
         aria-modal="true"
         aria-labelledby="booking-title"
         onKeyDown={onKeyDown}
-        className={`fixed right-0 top-0 z-[80] flex h-full w-full flex-col bg-background shadow-2xl transition-transform duration-500 ease-out sm:w-[440px] lg:w-[480px] ${
+        className={`booking-drawer fixed right-0 top-0 z-[80] flex h-full w-full flex-col bg-background shadow-2xl transition-transform duration-500 ease-out sm:w-[440px] lg:w-[480px] ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
+        <div className="booking-drawer-photo" aria-hidden="true"><Image src="/images/nail-art.jpg" alt="" fill sizes="350px" /><span>DIMERA / YOUR MOMENT</span></div>
         <div className="flex items-center justify-between border-b border-border px-6 py-5 sm:px-8 sm:py-6">
           <div>
             <span className="font-body text-[10px] uppercase tracking-ultra text-accent-strong">
-              Reservation Suite
+              Appointment request
             </span>
             <h2
               id="booking-title"
               className="mt-1 font-heading text-2xl font-light text-foreground"
             >
-              {done ? "Reserved" : "Reserve a Transformation"}
+              {done ? "Request saved" : "Request your ritual"}
             </h2>
           </div>
           <button
             ref={closeRef}
             onClick={done ? closeAndReset : onClose}
-            aria-label="Close reservation"
+            aria-label="Close appointment request"
             className="-mr-2 flex h-11 w-11 items-center justify-center text-foreground/60 transition-colors hover:text-foreground"
           >
             <X size={20} />
@@ -261,12 +263,12 @@ export default function BookingDrawer({
               <Check size={26} className="text-accent" />
             </div>
             <h3 className="mt-8 font-heading text-3xl font-light text-foreground">
-              Your ritual is reserved
+              Your request is saved
             </h3>
             <p className="mt-4 font-body text-sm font-light leading-relaxed text-muted-foreground">
               {selectedService?.name} on {formatDate(form.appointment_date)} at{" "}
-              {form.appointment_time}. We&rsquo;ll confirm by phone or email
-              shortly{firstName ? `, ${firstName}` : ""}.
+              {form.appointment_time} is your preferred appointment{firstName ? `, ${firstName}` : ""}.
+              A salon team member must review the request before it is confirmed.
             </p>
             <button
               onClick={closeAndReset}
@@ -392,7 +394,7 @@ export default function BookingDrawer({
                     </legend>
                     {!form.appointment_date && (
                       <p className="mt-2 font-body text-xs font-light text-muted-foreground">
-                        Choose a date first to see open times.
+                        Choose a date first to see preferred times. These times are not live availability.
                       </p>
                     )}
                     <div className="mt-3 grid grid-cols-3 gap-2">
@@ -554,7 +556,7 @@ export default function BookingDrawer({
                   disabled={!canContinue || submitting}
                   className="min-h-11 bg-accent-strong px-7 py-3 font-body text-[11px] uppercase tracking-luxe text-background transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {submitting ? "Reserving…" : "Confirm Reservation"}
+                  {submitting ? "Saving request…" : "Send request"}
                 </button>
               )}
             </div>
@@ -567,7 +569,7 @@ export default function BookingDrawer({
           role="alert"
           className="fixed bottom-4 right-4 z-[100] w-[calc(100%-2rem)] rounded-md border border-destructive bg-destructive p-6 pr-8 text-destructive-foreground shadow-lg md:max-w-[420px]"
         >
-          <p className="font-body text-sm font-semibold">Could not reserve</p>
+          <p className="font-body text-sm font-semibold">Could not save request</p>
           <p className="mt-1 font-body text-sm opacity-90">{error}</p>
         </div>
       )}
