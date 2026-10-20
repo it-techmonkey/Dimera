@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 
-/** Curtain intro: letters rise, then the whole panel lifts away after 2.2s. */
+/** Curtain intro: letters rise, then the whole panel lifts away after 1.3s. */
 export default function Preloader() {
   const [visible, setVisible] = useState(true);
   const [removed, setRemoved] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 2200);
+    const timer = setTimeout(() => setVisible(false), 1300);
     document.body.style.overflow = "hidden";
     return () => clearTimeout(timer);
   }, []);
@@ -22,6 +22,7 @@ export default function Preloader() {
 
   return (
     <motion.div
+      aria-hidden="true"
       className="fixed inset-0 z-[100] flex items-center justify-center bg-foreground"
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : "-100%" }}
@@ -39,7 +40,7 @@ export default function Preloader() {
             initial={{ y: "120%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
-              delay: 0.15 + i * 0.08,
+              delay: 0.1 + i * 0.06,
               duration: 0.9,
               ease: [0.16, 1, 0.3, 1],
             }}
@@ -53,13 +54,13 @@ export default function Preloader() {
         className="absolute bottom-14 h-px bg-accent"
         initial={{ width: 0 }}
         animate={{ width: "3rem" }}
-        transition={{ delay: 0.9, duration: 1.2, ease: "easeOut" }}
+        transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
       />
       <motion.p
         className="absolute bottom-8 font-body text-[9px] uppercase tracking-ultra text-background/40"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
       >
         The ritual of transformation
       </motion.p>

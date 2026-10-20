@@ -15,6 +15,8 @@
   --muted-foreground: 32 15% 42%;
   --accent: 35 35% 55%;
   --accent-foreground: 42 36% 95%;
+  /* The gold, deepened enough for small text to pass WCAG AA on ivory. */
+  --accent-strong: 32 38% 34%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 42 36% 95%;
   --border: 35 25% 84%;
@@ -38,6 +40,7 @@
   --color-muted-foreground: hsl(var(--muted-foreground));
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-strong: hsl(var(--accent-strong));
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
   --color-border: hsl(var(--border));
@@ -63,6 +66,17 @@
     scroll-behavior: smooth;
   }
 
+  /* Anchored sections land below the fixed header. */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
@@ -85,6 +99,13 @@
   line-height: 1.25;
   @media (min-width: 640px) {
     line-height: 1;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -191,6 +212,25 @@
 @media (pointer: coarse) {
   .cursor-glow {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .aurora,
+  .marquee-track,
+  .shimmer-text {
+    animation: none;
+  }
+  .shimmer-text {
+    color: hsl(var(--accent));
+  }
+  .ink-reveal {
+    filter: none;
+    transform: none;
+    transition: opacity 0.4s ease;
   }
 }
 

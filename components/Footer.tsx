@@ -1,3 +1,4 @@
+import { contact, navLinks } from "@/lib/data";
 import { Clock, Instagram, MapPin, Phone } from "./icons";
 import Reveal from "./Reveal";
 
@@ -6,7 +7,7 @@ export default function Footer({ onReserve }: { onReserve: () => void }) {
     <footer id="visit" className="bg-background">
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <Reveal className="flex flex-col items-center text-center">
-          <span className="font-body text-[11px] uppercase tracking-ultra text-accent">
+          <span className="font-body text-[11px] uppercase tracking-ultra text-accent-strong">
             Visit the Sanctuary
           </span>
           <div className="slow-stroke my-6 w-16" />
@@ -15,75 +16,86 @@ export default function Footer({ onReserve }: { onReserve: () => void }) {
           </h2>
         </Reveal>
 
-        <div className="mt-16 grid gap-10 border-t border-border pt-12 lg:grid-cols-3">
+        <div className="mt-16 grid gap-10 border-t border-border pt-12 sm:grid-cols-2 lg:grid-cols-3">
           <div>
             <MapPin size={18} className="text-accent" />
-            <h4 className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/50">
+            <h3 className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/60">
               The Atelier
-            </h4>
-            <p className="mt-2 font-heading text-xl font-light text-foreground">
-              Al Abeir, Shop No. 6, JVC
+            </h3>
+            <address className="mt-2 font-heading text-xl font-light not-italic text-foreground">
+              {contact.address[0]}
               <br />
-              Dubai, United Arab Emirates
-            </p>
+              {contact.address[1]}
+            </address>
+            <a
+              href={contact.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex min-h-11 items-center font-body text-[11px] uppercase tracking-luxe text-accent-strong underline-offset-4 hover:underline"
+            >
+              Get directions →
+            </a>
           </div>
           <div>
             <Clock size={18} className="text-accent" />
-            <h4 className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/50">
+            <h3 className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/60">
               Hours
-            </h4>
+            </h3>
             <p className="mt-2 font-heading text-xl font-light text-foreground">
-              Mon — Sat · 10:00 — 20:00
+              {contact.hours[0]}
               <br />
-              Sunday · By appointment
+              {contact.hours[1]}
             </p>
           </div>
           <div>
             <Phone size={18} className="text-accent" />
-            <h4 className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/50">
+            <h3 className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/60">
               Reserve
-            </h4>
+            </h3>
             <a
-              href="tel:+97140000000"
-              className="mt-2 block font-heading text-xl font-light text-foreground transition-colors hover:text-accent"
+              href={contact.phoneHref}
+              className="mt-2 block font-heading text-xl font-light text-foreground transition-colors hover:text-accent-strong"
             >
-              +971 4 000 0000
+              {contact.phone}
             </a>
             <a
-              href="https://instagram.com"
+              href={contact.instagramUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-3 inline-flex items-center gap-2 font-body text-[11px] uppercase tracking-luxe text-foreground/60 transition-colors hover:text-accent"
+              className="mt-2 inline-flex min-h-11 items-center gap-2 font-body text-[11px] uppercase tracking-luxe text-foreground/70 transition-colors hover:text-accent-strong"
             >
-              <Instagram size={14} /> @dimera.atelier
+              <Instagram size={14} /> {contact.instagram}
             </a>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center gap-6 border-t border-border pt-12 text-center">
+        <div className="mt-16 flex flex-col items-center gap-8 border-t border-border pt-12 text-center">
           <p className="font-heading text-3xl font-light tracking-[0.15em] text-foreground">
             DIMERA
           </p>
           <button
             onClick={onReserve}
-            className="bg-foreground px-9 py-4 font-body text-[11px] uppercase tracking-luxe text-background transition-colors hover:bg-accent"
+            className="bg-foreground px-9 py-4 font-body text-[11px] uppercase tracking-luxe text-background transition-colors hover:bg-accent-strong"
           >
             Reserve a Transformation
           </button>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
-            {["Privacy", "Terms", "Cancellation Policy"].map((label) => (
+          <nav
+            aria-label="Footer"
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2"
+          >
+            {navLinks.map((link) => (
               <a
-                key={label}
-                href="#"
-                className="font-body text-[10px] uppercase tracking-luxe text-foreground/40 transition-colors hover:text-foreground"
+                key={link.href}
+                href={link.href}
+                className="py-2 font-body text-[10px] uppercase tracking-luxe text-foreground/60 transition-colors hover:text-foreground"
               >
-                {label}
+                {link.label}
               </a>
             ))}
-          </div>
+          </nav>
           <p
             suppressHydrationWarning
-            className="mt-4 font-body text-[10px] uppercase tracking-luxe text-foreground/30"
+            className="font-body text-[10px] uppercase tracking-luxe text-foreground/55"
           >
             © {new Date().getFullYear()} Dimera. The ritual of transformation,
             refined.

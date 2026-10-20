@@ -15,7 +15,11 @@ export default function Marquee({
     >
       <div className="marquee-track flex w-max items-center">
         {loop.map((item, i) => (
-          <span key={i} className="flex items-center">
+          <span
+            key={i}
+            aria-hidden={i >= items.length || undefined}
+            className="flex items-center"
+          >
             <span
               className={`whitespace-nowrap px-8 font-heading text-3xl font-light italic lg:text-5xl ${
                 dark ? "text-background/80" : "text-foreground/60"

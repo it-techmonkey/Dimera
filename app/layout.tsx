@@ -17,15 +17,41 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const description =
+  "Dimera is a ladies' beauty salon in JVC, Dubai — manicures, pedicures, lashes, brows, threading and hair. Launch offer prices now on. Reserve online.";
+
 export const metadata: Metadata = {
-  title: "Dimera — The Ritual of Transformation",
-  description:
-    "Dimera — a sanctuary of transformation for the modern woman. Nails, lashes, hair architecture and the ritual of self-care, refined.",
+  title: "Dimera — Ladies' Beauty Salon in JVC, Dubai",
+  description,
+  applicationName: "Dimera",
+  keywords: [
+    "beauty salon JVC",
+    "ladies salon Dubai",
+    "pedicure JVC",
+    "gel manicure Dubai",
+    "lash extensions JVC",
+    "threading JVC",
+    "hair salon JVC",
+  ],
+  openGraph: {
+    type: "website",
+    siteName: "Dimera",
+    title: "Dimera — The Ritual of Transformation",
+    description,
+    locale: "en_AE",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dimera — The Ritual of Transformation",
+    description,
+  },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#f7f4ee",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

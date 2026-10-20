@@ -1,11 +1,148 @@
+/** A bookable line on the price menu. `price` is live; `comparePrice` is the
+ * post-launch price, shown struck through until it replaces `price`. */
+export type MenuItem = {
+  id: string;
+  name: string;
+  price: string;
+  comparePrice?: string;
+};
+
+export type MenuGroup = {
+  id: string;
+  title: string;
+  items: MenuItem[];
+};
+
+export const priceMenu: MenuGroup[] = [
+  {
+    id: "pedicure",
+    title: "Pedicure",
+    items: [
+      { id: "pedicure-basic", name: "Basic Pedicure", price: "70" },
+      { id: "pedicure-spa", name: "Spa / Jacuzzi Pedicure", price: "100" },
+      {
+        id: "pedicure-gel",
+        name: "Pedicure + Gel",
+        price: "120",
+        comparePrice: "150",
+      },
+      { id: "pedicure-jacuzzi-gel", name: "Jacuzzi Pedicure + Gel", price: "170" },
+    ],
+  },
+  {
+    id: "nails",
+    title: "Nails",
+    items: [
+      {
+        id: "manicure-hard-gel",
+        name: "Manicure + Hard Gel",
+        price: "120",
+        comparePrice: "150",
+      },
+      {
+        id: "manicure-extension-gel",
+        name: "Manicure + Extension + Gel",
+        price: "150",
+        comparePrice: "170",
+      },
+      {
+        id: "gel-removal",
+        name: "Gel Removal",
+        price: "40–50",
+        comparePrice: "45–50",
+      },
+      { id: "nail-design", name: "Nail Design", price: "From 20" },
+    ],
+  },
+  {
+    id: "lashes-brows",
+    title: "Lashes & Brows",
+    items: [
+      {
+        id: "lash-extensions",
+        name: "Lash Extensions",
+        price: "From 130–200",
+        comparePrice: "From 130–250",
+      },
+      {
+        id: "lash-lamination",
+        name: "Lash Lamination",
+        price: "120",
+        comparePrice: "150",
+      },
+      {
+        id: "brow-lamination",
+        name: "Brow Lamination",
+        price: "120",
+        comparePrice: "150",
+      },
+      { id: "lash-removal", name: "Lash Removal", price: "40" },
+      { id: "lash-brow-lamination", name: "Lash + Brow Lamination", price: "270" },
+    ],
+  },
+  {
+    id: "threading",
+    title: "Threading",
+    items: [
+      { id: "threading-eyebrow", name: "Eyebrow Threading", price: "25" },
+      { id: "threading-upper-lip", name: "Upper Lip Threading", price: "15" },
+      { id: "threading-full-face", name: "Full Face Threading", price: "50" },
+    ],
+  },
+  {
+    id: "hair",
+    title: "Hair",
+    items: [
+      {
+        id: "hair-cut-blow-dry",
+        name: "Hair Cut / Blow Dry",
+        price: "120",
+        comparePrice: "150",
+      },
+      { id: "hair-style", name: "Hair Style", price: "150" },
+      { id: "hair-color", name: "Hair Color", price: "Price on consultation" },
+      {
+        id: "hair-keratin",
+        name: "Hair Keratin",
+        price: "From 250",
+        comparePrice: "From 300",
+      },
+      {
+        id: "wash-blow-dry",
+        name: "Wash / Blow Dry",
+        price: "From 120",
+        comparePrice: "150",
+      },
+      { id: "wash-blow-haircut", name: "Wash + Blow Dry + Haircut", price: "180" },
+      { id: "wash-blow-style", name: "Wash + Blow Dry + Hairstyle", price: "220" },
+      {
+        id: "haircut-blow-style",
+        name: "Haircut + Blow Dry + Hairstyle",
+        price: "280",
+      },
+    ],
+  },
+];
+
+export const menuItems: MenuItem[] = priceMenu.flatMap((g) => g.items);
+
+/** Prices are free text ("120", "From 20", "40–50", "Price on consultation");
+ * anything with a number gets the currency appended. */
+export function formatPrice(price: string) {
+  return /\d/.test(price) ? `${price} AED` : price;
+}
+
+/** A showcase card on the page. Quick Book opens the drawer on `bookId`. */
 export type Service = {
   id: string;
   name: string;
   collection: string;
   description: string;
   price: string;
+  comparePrice?: string;
   duration: string;
   image: string;
+  bookId: string;
 };
 
 export const services: Service[] = [
@@ -16,8 +153,10 @@ export const services: Service[] = [
     description:
       "Sculpted, buffed, and lacquered — the foundational ritual for hands that speak before you do.",
     price: "from 120",
+    comparePrice: "from 150",
     duration: "45 min",
     image: "/images/manicure.jpg",
+    bookId: "manicure-hard-gel",
   },
   {
     id: "pedicure",
@@ -25,9 +164,10 @@ export const services: Service[] = [
     collection: "Nails & Hands",
     description:
       "A restorative soak and meticulous finish for feet that carry you through the world.",
-    price: "from 150",
+    price: "from 70",
     duration: "60 min",
     image: "/images/pedicure.jpg",
+    bookId: "pedicure-basic",
   },
   {
     id: "nails",
@@ -35,9 +175,10 @@ export const services: Service[] = [
     collection: "Nails & Hands",
     description:
       "Sculptural extensions and hand-painted detail — nails as wearable architecture.",
-    price: "from 180",
+    price: "from 20",
     duration: "75 min",
     image: "/images/nail-art.jpg",
+    bookId: "nail-design",
   },
   {
     id: "lashes",
@@ -45,9 +186,10 @@ export const services: Service[] = [
     collection: "The Lash Suite",
     description:
       "Ethereal extensions, individually placed — a flutter that transforms the entire gaze.",
-    price: "from 250",
+    price: "from 130",
     duration: "90 min",
     image: "/images/lash-suite.jpg",
+    bookId: "lash-extensions",
   },
   {
     id: "hair-color",
@@ -55,9 +197,10 @@ export const services: Service[] = [
     collection: "Hair Architecture",
     description:
       "Fluid gradients of copper and rose-gold, painted by hand for dimension that moves with you.",
-    price: "from 320",
+    price: "Price on consultation",
     duration: "120 min",
     image: "/images/hair-color.jpg",
+    bookId: "hair-color",
   },
   {
     id: "haircut",
@@ -65,9 +208,11 @@ export const services: Service[] = [
     collection: "Hair Architecture",
     description:
       "Precision cuts shaped to your bone structure — the architecture of a silhouette.",
-    price: "from 200",
+    price: "120",
+    comparePrice: "150",
     duration: "60 min",
     image: "/images/haircut.jpg",
+    bookId: "hair-cut-blow-dry",
   },
   {
     id: "hair-wash",
@@ -75,14 +220,17 @@ export const services: Service[] = [
     collection: "Hair Architecture",
     description:
       "A meditative cleanse at the basin, finished with a sculpted blow-dry that lasts.",
-    price: "from 130",
+    price: "from 120",
+    comparePrice: "150",
     duration: "45 min",
     image: "/images/wash-blow.jpg",
+    bookId: "wash-blow-dry",
   },
 ];
 
 export const navLinks = [
   { label: "Atelier", href: "#atelier" },
+  { label: "Prices", href: "#menu" },
   { label: "Gallery", href: "#gallery" },
   { label: "Ritual", href: "#about" },
   { label: "Voices", href: "#voices" },
@@ -154,5 +302,17 @@ export const timeSlots = [
   "17:30",
   "19:00",
 ];
+
+export const contact = {
+  address: ["Al Abeir, Shop No. 6, JVC", "Dubai, United Arab Emirates"],
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Al+Abeir+Shop+6+Jumeirah+Village+Circle+Dubai",
+  hours: ["Mon — Sat · 10:00 — 20:00", "Sunday · By appointment"],
+  // Placeholders — replace with the salon's real number and handle before launch.
+  phone: "+971 4 000 0000",
+  phoneHref: "tel:+97140000000",
+  instagram: "@dimera.atelier",
+  instagramUrl: "https://www.instagram.com/dimera.atelier",
+};
 
 export const ease = [0.16, 1, 0.3, 1] as const;

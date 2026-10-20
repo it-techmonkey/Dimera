@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { services, stylists, timeSlots } from "@/lib/data";
+import { menuItems, stylists, timeSlots } from "@/lib/data";
 import { getSql } from "@/lib/db";
+import { isPastSlot, salonToday } from "@/lib/time";
 
 type Reservation = {
   service: string;
@@ -23,25 +24,24 @@ function isRealDate(value: string) {
   return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === value;
 }
 
-/** Today's date in the salon's timezone (Dubai), as YYYY-MM-DD. */
-const todayInDubai = () =>
-  new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Dubai" });
-
 function validate(body: Partial<Reservation>): string | null {
-  if (!services.some((s) => s.id === body.service)) return "Please choose a service.";
+  if (!menuItems.some((s) => s.id === body.service)) return "Please choose a service.";
   if (!stylists.some((s) => s.id === body.stylist)) return "Please choose an artisan.";
   if (!body.appointment_date || !isRealDate(body.appointment_date))
     return "Please choose a valid date.";
-  if (body.appointment_date < todayInDubai())
+  if (body.appointment_date < salonToday())
     return "Please choose a date that is not in the past.";
   if (!body.appointment_time || !timeSlots.includes(body.appointment_time))
     return "Please choose a valid time.";
+  if (isPastSlot(body.appointment_date, body.appointment_time))
+    return "That time has already passed today. Please choose a later one.";
   const name = body.name?.trim();
   if (!name || name.length > 100) return "Please enter your name.";
   if (!body.email || body.email.length > 254 || !emailPattern.test(body.email))
     return "Please enter a valid email.";
   const phone = body.phone?.trim();
-  if (!phone || phone.length > 40) return "Please enter your phone number.";
+  if (!phone || phone.length > 40 || phone.replace(/\D/g, "").length < 7)
+    return "Please enter your phone number.";
   if ((body.notes?.length ?? 0) > 1000) return "Notes are too long.";
   return null;
 }

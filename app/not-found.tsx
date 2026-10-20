@@ -1,23 +1,25 @@
+import Link from "next/link";
+
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
-      <div className="w-full max-w-md text-center">
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <h1 className="text-7xl font-light text-slate-300">404</h1>
-            <div className="mx-auto h-0.5 w-16 bg-slate-200" />
-          </div>
-          <div className="space-y-3">
-            <h2 className="text-2xl font-medium text-slate-800">
-              Page Not Found
-            </h2>
-            <p className="leading-relaxed text-slate-600">
-              The page you are looking for could not be found in this
-              application.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <main className="flex min-h-svh flex-col items-center justify-center bg-background px-6 text-center">
+      <span className="font-body text-[11px] uppercase tracking-ultra text-accent-strong">
+        Error 404
+      </span>
+      <div className="slow-stroke my-6 w-16" />
+      <h1 className="font-heading text-5xl font-light leading-display text-foreground sm:text-6xl">
+        This page has <span className="italic text-accent">wandered off</span>
+      </h1>
+      <p className="mt-6 max-w-md font-body text-base font-light leading-relaxed text-muted-foreground">
+        The page you&rsquo;re looking for doesn&rsquo;t exist. Let us guide
+        you back to the sanctuary.
+      </p>
+      <Link
+        href="/"
+        className="mt-10 bg-foreground px-9 py-4 font-body text-[11px] uppercase tracking-luxe text-background transition-colors hover:bg-accent-strong"
+      >
+        Return to Dimera
+      </Link>
+    </main>
   );
 }

@@ -31,7 +31,7 @@ export default function About({ onReserve }: { onReserve: () => void }) {
         </Reveal>
 
         <Reveal className="order-1 lg:order-2" delay={120}>
-          <span className="font-body text-[11px] uppercase tracking-ultra text-accent">
+          <span className="font-body text-[11px] uppercase tracking-ultra text-accent-strong">
             The Ritual
           </span>
           <div className="slow-stroke my-6 w-16" />
