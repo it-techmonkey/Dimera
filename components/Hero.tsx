@@ -9,6 +9,12 @@ const ease = (value: number) => {
   return x * x * (3 - 2 * x);
 };
 
+const interiorImages = [
+  "/images/pedicure.jpg",
+  "/images/hero-mobile-salon.jpg",
+  "/images/wash-blow.jpg",
+];
+
 export default function Hero({ onPassedChange }: { onPassedChange: (passed: boolean) => void }) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -37,6 +43,7 @@ export default function Hero({ onPassedChange }: { onPassedChange: (passed: bool
       if (rightRef.current) rightRef.current.style.transform = `rotateY(${102 * open}deg)`;
       stage.style.setProperty("--door-copy-opacity", String(1 - ease(progress / 0.15)));
       stage.style.setProperty("--light-opacity", String(open * 0.22));
+      stage.style.setProperty("--shop-backdrop-opacity", String(0.14 * ease((progress - 0.12) / 0.3)));
       stage.style.setProperty("--interior-parallax", `${(progress * 2.5).toFixed(2)}%`);
       const second = ease((progress - 0.42) / 0.22);
       const third = ease((progress - 0.72) / 0.22);
@@ -71,10 +78,11 @@ export default function Hero({ onPassedChange }: { onPassedChange: (passed: bool
       <div ref={stageRef} className="portal-stage">
         <div className="portal-wall" aria-hidden="true" />
         <div className="portal-window-shadow" aria-hidden="true" />
+        <div className="portal-shop-backdrop" aria-hidden="true" />
         <div className="portal-niche" aria-hidden="true"><span className="niche-reveal" /><span className="niche-threshold" /></div>
         <div className="portal-arch">
           <div className="portal-interior" aria-hidden="true">
-            {["/images/pedicure.jpg", "/images/hero-mobile-salon.jpg", "/images/wash-blow.jpg"].map((src, index) => (
+            {interiorImages.map((src, index) => (
               <div key={src} ref={(node) => { imageRefs.current[index] = node; }} className="interior-image-layer" style={{ opacity: index === 0 ? 1 : 0 }}>
                 <Image src={src} alt="" fill priority={index === 0} sizes="(max-width: 767px) 90vw, 590px" className="interior-image" />
               </div>

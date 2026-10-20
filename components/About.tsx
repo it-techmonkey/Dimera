@@ -6,7 +6,7 @@ export default function About({ onReserve }: { onReserve: () => void }) {
       <div className="section-rule"><span>The Ritual</span><span>The Dimera philosophy</span></div>
       <div className="ritual-layout">
         <div className="ritual-image">
-          <Image src="/images/gallery-beige.jpg" alt="A moment of transformation at Dimera" fill sizes="(min-width: 768px) 45vw, 100vw" />
+          <Image src="/images/shop-interior-reference.jpeg" alt="Dimera shop interior with the reception desk and Dimera name on the wall" fill sizes="(min-width: 768px) 1000px, 700px" className="ritual-shop-photo" />
         </div>
         <div className="ritual-copy">
           <p className="eyebrow">The Ritual</p>

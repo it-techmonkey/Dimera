@@ -95,8 +95,11 @@ export default function BookingDrawer({
   if (seenOpen !== openCount) {
     setSeenOpen(openCount);
     setStep(presetService ? 1 : 0);
+    setForm({ ...emptyForm, service: presetService ?? "" });
+    setTouched({});
+    setSubmitting(false);
     setDone(false);
-    if (presetService) setForm((f) => ({ ...f, service: presetService }));
+    setError(null);
   }
 
   useEffect(() => {
