@@ -1,6 +1,6 @@
 /* Round 4: a material doorway with a fixed, portrait interior. */
 :root { --wall: #E3DACB; --linen: #F2ECE1; }
-.portal-section { height: 180svh; }
+.portal-section { height: 220svh; }
 .portal-stage {
   --door-copy-opacity: 1;
   --light-opacity: 0;
@@ -118,7 +118,7 @@
   .portal-niche { width: calc(min(65vw, 520px) + 72px); }
 }
 @media (max-width: 767px) {
-  .portal-section { height: 180svh; }
+  .portal-section { height: 220svh; }
   .portal-stage { padding-top: 60px; }
   .portal-niche {
     top: calc(50% + 30px);

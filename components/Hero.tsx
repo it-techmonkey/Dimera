@@ -38,15 +38,15 @@ export default function Hero({ onPassedChange }: { onPassedChange: (passed: bool
       if (reduced.matches) return;
       const travel = Math.max(1, section.offsetHeight - window.innerHeight);
       const progress = clamp(-rect.top / travel);
-      const open = ease(progress / 0.5);
+      const open = ease(progress / 0.36);
       if (leftRef.current) leftRef.current.style.transform = `rotateY(${-102 * open}deg)`;
       if (rightRef.current) rightRef.current.style.transform = `rotateY(${102 * open}deg)`;
       stage.style.setProperty("--door-copy-opacity", String(1 - ease(progress / 0.15)));
       stage.style.setProperty("--light-opacity", String(open * 0.22));
       stage.style.setProperty("--shop-backdrop-opacity", String(0.14 * ease((progress - 0.12) / 0.3)));
       stage.style.setProperty("--interior-parallax", `${(progress * 2.5).toFixed(2)}%`);
-      const second = ease((progress - 0.42) / 0.22);
-      const third = ease((progress - 0.72) / 0.22);
+      const second = ease((progress - 0.45) / 0.2);
+      const third = ease((progress - 0.75) / 0.2);
       [1 - second, second * (1 - third), third].forEach((opacity, index) => {
         if (imageRefs.current[index]) imageRefs.current[index]!.style.opacity = String(opacity);
       });
