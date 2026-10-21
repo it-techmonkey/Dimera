@@ -15,6 +15,7 @@ const categoryImages: Record<string, string> = {
 
 export default function Collection({ onBook }: { onBook: (id: string) => void }) {
   const [active, setActive] = useState(priceMenu[0].id);
+  const [open, setOpen] = useState<string | null>(priceMenu[0].id);
   const group = priceMenu.find((item) => item.id === active) ?? priceMenu[0];
 
   return (
@@ -31,7 +32,7 @@ export default function Collection({ onBook }: { onBook: (id: string) => void })
         </div>
         <div className="treatment-menu">
           {priceMenu.map((category, index) => {
-            const expanded = active === category.id;
+            const expanded = open === category.id;
             return (
               <div className="portal-group collection-group" key={category.id}>
                 <h3>
@@ -40,7 +41,10 @@ export default function Collection({ onBook }: { onBook: (id: string) => void })
                     className="collection-category"
                     aria-expanded={expanded}
                     aria-controls={`collection-panel-${category.id}`}
-                    onClick={() => setActive(category.id)}
+                    onClick={() => {
+                      setActive(category.id);
+                      setOpen(expanded ? null : category.id);
+                    }}
                   >
                     <span className="collection-number">{String(index + 1).padStart(2, "0")}</span>
                     <span className="collection-name">{category.title}</span>

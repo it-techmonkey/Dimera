@@ -29,7 +29,7 @@ const jsonLd = {
         "Saturday",
       ],
       opens: "10:00",
-      closes: "20:00",
+      closes: "10:00",
     },
   ],
   hasOfferCatalog: {

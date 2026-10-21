@@ -229,9 +229,11 @@ export const services: Service[] = [
 ];
 
 export const navLinks = [
-  { label: "The Collection", href: "#collection" },
-  { label: "The Ritual", href: "#about" },
-  { label: "First Visit", href: "#experience" },
+  { label: "Atelier", href: "#atelier" },
+  { label: "Prices", href: "#menu" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Ritual", href: "#about" },
+  { label: "Voices", href: "#voices" },
   { label: "Visit", href: "#visit" },
 ];
 
@@ -305,7 +307,7 @@ export const contact = {
   address: ["Al Abeir, Shop No. 6, JVC", "Dubai, United Arab Emirates"],
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Al+Abeir+Shop+6+Jumeirah+Village+Circle+Dubai",
-  hours: ["Mon — Sat · 10:00 — 20:00", "Sunday · By appointment"],
+  hours: ["Mon — Sat · 10:00 — 10:00", "Sunday · By appointment"],
   // Placeholders — replace with the salon's real number and handle before launch.
   phone: "+971 4 000 0000",
   phoneHref: "tel:+97140000000",
