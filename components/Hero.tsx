@@ -68,9 +68,9 @@ export default function Hero({ onPassedChange }: { onPassedChange: (passed: bool
   const enter = () => {
     const collection = document.getElementById("collection-title");
     if (!collection) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    collection.scrollIntoView({ behavior: reduced ? "instant" : "smooth" });
-    window.setTimeout(() => collection.focus({ preventScroll: true }), reduced ? 0 : 700);
+    const instant = window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches;
+    collection.scrollIntoView({ behavior: instant ? "instant" : "smooth" });
+    window.setTimeout(() => collection.focus({ preventScroll: true }), instant ? 0 : 700);
   };
 
   return (
