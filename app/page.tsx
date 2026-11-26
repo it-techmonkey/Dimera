@@ -7,7 +7,7 @@ const jsonLd = {
   "@type": "BeautySalon",
   name: "Dimera",
   description:
-    "A ladies' beauty salon in Jumeirah Village Circle, Dubai — nails, lashes, brows, threading and hair.",
+    "A ladies' beauty salon in Jumeirah Village Circle, Dubai — nails, lashes, brows, threading, waxing and hair.",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Al Abeir, Shop No. 6, Jumeirah Village Circle",
@@ -15,7 +15,7 @@ const jsonLd = {
     addressCountry: "AE",
   },
   hasMap: contact.mapsUrl,
-  priceRange: "AED 15 – 300",
+  priceRange: "AED 15 – 420",
   currenciesAccepted: "AED",
   openingHoursSpecification: [
     {

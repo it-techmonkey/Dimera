@@ -22,7 +22,7 @@ const montserrat = Montserrat({
 });
 
 const description =
-  "Dimera is a ladies' beauty salon in JVC, Dubai — manicures, pedicures, lashes, brows, threading and hair. Launch offer prices now on. Reserve online.";
+  "Dimera is a ladies' beauty salon in JVC, Dubai — manicures, pedicures, lashes, brows, threading, waxing and hair. Reserve online.";
 
 export const metadata: Metadata = {
   title: "Dimera — Ladies' Beauty Salon in JVC, Dubai",
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     "gel manicure Dubai",
     "lash extensions JVC",
     "threading JVC",
+    "waxing JVC",
     "hair salon JVC",
   ],
   openGraph: {

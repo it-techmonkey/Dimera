@@ -127,7 +127,7 @@ export default function Atelier({
                 Prices
               </span>
               <span className="px-6 font-body text-[10px] uppercase tracking-luxe text-foreground/60">
-                See the full menu &amp; launch offers
+                See the full price menu
               </span>
             </a>
           </motion.div>

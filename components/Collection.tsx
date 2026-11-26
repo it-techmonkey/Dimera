@@ -11,7 +11,10 @@ const categoryImages: Record<string, string> = {
   "lashes-brows": "/images/lash-suite.jpg",
   threading: "/images/hero-mobile-salon.jpg",
   hair: "/images/hair-color.jpg",
+  waxing: "/images/hero-silk.jpg",
 };
+
+const treatmentCount = priceMenu.reduce((n, g) => n + g.items.length, 0);
 
 export default function Collection({ onBook }: { onBook: (id: string) => void }) {
   const [active, setActive] = useState(priceMenu[0].id);
@@ -20,7 +23,7 @@ export default function Collection({ onBook }: { onBook: (id: string) => void })
 
   return (
     <section id="collection" className="treatment-section section-wrap" aria-labelledby="collection-title">
-      <div className="section-rule"><span>The Collection</span><span>24 treatments · 5 categories</span></div>
+      <div className="section-rule"><span>The Collection</span><span>{treatmentCount} treatments · {priceMenu.length} categories</span></div>
       <div className="treatment-heading">
         <div><p className="eyebrow">The full menu</p><h2 id="collection-title" tabIndex={-1}>Find your ritual.</h2></div>
         <p>Explore the treatments and choose the one that fits your moment.</p>

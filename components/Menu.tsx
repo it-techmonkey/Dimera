@@ -36,15 +36,15 @@ export default function Menu({ onBook }: { onBook: (id: string) => void }) {
         <Reveal className="flex flex-col items-center text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 px-4 py-1.5 font-body text-[10px] uppercase tracking-luxe text-accent-strong">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            Launch offer now on
+            All treatments
           </span>
           <div className="slow-stroke my-6 w-16" />
           <h2 className="font-heading text-5xl font-light leading-display text-foreground sm:text-6xl lg:text-7xl">
             The Price <span className="italic text-accent">Menu</span>
           </h2>
           <p className="mt-6 max-w-xl font-body text-base font-light leading-relaxed text-muted-foreground">
-            Introductory prices for our opening season. Where a price is
-            struck through, that is the standard price after launch.
+            Every treatment and its price, in one place. Choose a service to
+            request your appointment.
           </p>
         </Reveal>
 

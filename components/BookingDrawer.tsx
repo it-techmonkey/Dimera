@@ -329,12 +329,6 @@ export default function BookingDrawer({
             <div className="flex-1 overflow-y-auto px-6 pb-8 sm:px-8">
               {step === 0 && (
                 <div className="space-y-7">
-                  <p className="font-body text-xs font-light leading-relaxed text-muted-foreground">
-                    <span className="font-normal text-accent-strong">
-                      Launch offer prices.
-                    </span>{" "}
-                    Struck-through prices apply after launch.
-                  </p>
                   {priceMenu.map((group) => (
                     <fieldset key={group.id}>
                       <legend className="mb-2 font-body text-[10px] uppercase tracking-luxe text-foreground/60">

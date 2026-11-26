@@ -20,12 +20,7 @@ export const priceMenu: MenuGroup[] = [
     items: [
       { id: "pedicure-basic", name: "Basic Pedicure", price: "70" },
       { id: "pedicure-spa", name: "Spa / Jacuzzi Pedicure", price: "100" },
-      {
-        id: "pedicure-gel",
-        name: "Pedicure + Gel",
-        price: "120",
-        comparePrice: "150",
-      },
+      { id: "pedicure-gel", name: "Pedicure + Gel", price: "150" },
       { id: "pedicure-jacuzzi-gel", name: "Jacuzzi Pedicure + Gel", price: "170" },
     ],
   },
@@ -33,49 +28,29 @@ export const priceMenu: MenuGroup[] = [
     id: "nails",
     title: "Nails",
     items: [
-      {
-        id: "manicure-hard-gel",
-        name: "Manicure + Hard Gel",
-        price: "120",
-        comparePrice: "150",
-      },
+      { id: "manicure-no-polish", name: "Manicure – No Polish", price: "60" },
+      { id: "manicure-hard-gel", name: "Manicure + Hard Gel", price: "150" },
       {
         id: "manicure-extension-gel",
         name: "Manicure + Extension + Gel",
-        price: "150",
-        comparePrice: "170",
+        price: "200",
       },
-      {
-        id: "gel-removal",
-        name: "Gel Removal",
-        price: "40–50",
-        comparePrice: "45–50",
-      },
+      { id: "extension-refill", name: "Extension Refill", price: "150" },
+      { id: "gel-removal", name: "Old Gel Removal", price: "40–50" },
       { id: "nail-design", name: "Nail Design", price: "From 20" },
+      { id: "nail-ombre", name: "Ombre Design", price: "40" },
+      { id: "nail-cat-eye", name: "Cat Eye", price: "60" },
     ],
   },
   {
     id: "lashes-brows",
     title: "Lashes & Brows",
     items: [
-      {
-        id: "lash-extensions",
-        name: "Lash Extensions",
-        price: "From 130–200",
-        comparePrice: "From 130–250",
-      },
-      {
-        id: "lash-lamination",
-        name: "Lash Lamination",
-        price: "120",
-        comparePrice: "150",
-      },
-      {
-        id: "brow-lamination",
-        name: "Brow Lamination",
-        price: "120",
-        comparePrice: "150",
-      },
+      // Keeps the old "lash-extensions" id so existing bookings still resolve.
+      { id: "lash-extensions", name: "Classic Eyelashes", price: "200" },
+      { id: "lash-volume", name: "Volume Eyelashes", price: "250–350" },
+      { id: "lash-lamination", name: "Lash Lamination", price: "150" },
+      { id: "brow-lamination", name: "Brow Lamination", price: "150" },
       { id: "lash-removal", name: "Lash Removal", price: "40" },
       { id: "lash-brow-lamination", name: "Lash + Brow Lamination", price: "270" },
     ],
@@ -93,26 +68,11 @@ export const priceMenu: MenuGroup[] = [
     id: "hair",
     title: "Hair",
     items: [
-      {
-        id: "hair-cut-blow-dry",
-        name: "Hair Cut / Blow Dry",
-        price: "120",
-        comparePrice: "150",
-      },
-      { id: "hair-style", name: "Hair Style", price: "150" },
+      { id: "hair-cut-blow-dry", name: "Haircut + Blow Dry", price: "250" },
+      { id: "hair-style", name: "Hair Styling", price: "From 200" },
       { id: "hair-color", name: "Hair Color", price: "Price on consultation" },
-      {
-        id: "hair-keratin",
-        name: "Hair Keratin",
-        price: "From 250",
-        comparePrice: "From 300",
-      },
-      {
-        id: "wash-blow-dry",
-        name: "Wash / Blow Dry",
-        price: "From 120",
-        comparePrice: "150",
-      },
+      { id: "hair-keratin", name: "Hair Keratin", price: "From 390" },
+      { id: "wash-blow-dry", name: "Wash + Blow Dry", price: "175" },
       { id: "wash-blow-haircut", name: "Wash + Blow Dry + Haircut", price: "180" },
       { id: "wash-blow-style", name: "Wash + Blow Dry + Hairstyle", price: "220" },
       {
@@ -120,6 +80,28 @@ export const priceMenu: MenuGroup[] = [
         name: "Haircut + Blow Dry + Hairstyle",
         price: "280",
       },
+    ],
+  },
+  {
+    id: "waxing",
+    title: "Waxing",
+    items: [
+      { id: "wax-body", name: "Body Waxing", price: "From 35" },
+      { id: "wax-underarm", name: "Underarm Wax", price: "45" },
+      { id: "wax-half-leg", name: "Half Leg Wax", price: "60" },
+      { id: "wax-full-leg", name: "Full Leg Wax", price: "100" },
+      { id: "wax-full-bikini", name: "Full Bikini Wax", price: "120" },
+      {
+        id: "wax-full-body",
+        name: "Full Body Wax (Without Bikini)",
+        price: "350",
+      },
+      {
+        id: "wax-full-body-bikini",
+        name: "Full Body Wax (With Bikini)",
+        price: "420",
+      },
+      { id: "wax-upper-lip", name: "Upper Lip Wax", price: "20" },
     ],
   },
 ];
@@ -152,8 +134,7 @@ export const services: Service[] = [
     collection: "Nails & Hands",
     description:
       "Sculpted, buffed, and lacquered — the foundational ritual for hands that speak before you do.",
-    price: "from 120",
-    comparePrice: "from 150",
+    price: "from 60",
     duration: "45 min",
     image: "/images/manicure.jpg",
     bookId: "manicure-hard-gel",
@@ -186,7 +167,7 @@ export const services: Service[] = [
     collection: "The Lash Suite",
     description:
       "Ethereal extensions, individually placed — a flutter that transforms the entire gaze.",
-    price: "from 130",
+    price: "from 200",
     duration: "90 min",
     image: "/images/lash-suite.jpg",
     bookId: "lash-extensions",
@@ -208,8 +189,7 @@ export const services: Service[] = [
     collection: "Hair Architecture",
     description:
       "Precision cuts shaped to your bone structure — the architecture of a silhouette.",
-    price: "120",
-    comparePrice: "150",
+    price: "250",
     duration: "60 min",
     image: "/images/haircut.jpg",
     bookId: "hair-cut-blow-dry",
@@ -220,8 +200,7 @@ export const services: Service[] = [
     collection: "Hair Architecture",
     description:
       "A meditative cleanse at the basin, finished with a sculpted blow-dry that lasts.",
-    price: "from 120",
-    comparePrice: "150",
+    price: "175",
     duration: "45 min",
     image: "/images/wash-blow.jpg",
     bookId: "wash-blow-dry",
@@ -303,16 +282,22 @@ export const timeSlots = [
   "19:00",
 ];
 
-export const contact = {
+export const contact: {
+  address: string[];
+  mapsUrl: string;
+  hours: string[];
+  /** Hidden until the salon's number is confirmed; set both to show it. */
+  phone?: string;
+  phoneHref?: string;
+  instagram: string;
+  instagramUrl: string;
+} = {
   address: ["Al Abeir, Shop No. 6, JVC", "Dubai, United Arab Emirates"],
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Al+Abeir+Shop+6+Jumeirah+Village+Circle+Dubai",
   hours: ["Mon — Sat · 10:00 — 10:00", "Sunday · By appointment"],
-  // Placeholders — replace with the salon's real number and handle before launch.
-  phone: "+971 4 000 0000",
-  phoneHref: "tel:+97140000000",
-  instagram: "@dimera.atelier",
-  instagramUrl: "https://www.instagram.com/dimera.atelier",
+  instagram: "@dimera.beauty",
+  instagramUrl: "https://www.instagram.com/dimera.beauty",
 };
 
 export const ease = [0.16, 1, 0.3, 1] as const;
